@@ -371,6 +371,9 @@ struct ContentView: View {
         }
     }
     
+    @State private var isSharePresented = false
+
+    
     var body: some View {
         
 //        let plug = startDatabase()
@@ -378,7 +381,7 @@ struct ContentView: View {
         
         
         let myFont = Font
-                .system(size: 24)
+                .system(size: 27)
                 .monospaced()
         
         let columns: [GridItem] = [
@@ -446,7 +449,7 @@ struct ContentView: View {
                     ForEach(0..<144) {
                         index in
                         Text(letter_set[index])
-                            .padding(1)
+                            .padding(0.1)
                             .foregroundColor(fgColor[index])
                             .onTapGesture {
                                 if current_letter >= 1 &&
@@ -471,29 +474,28 @@ struct ContentView: View {
                         }
                     }
                 }
+                .padding(Edge.Set.horizontal, 3)
                     .font(myFont)
                     .foregroundColor(.white)
                     .textCase(Text.Case.uppercase)
                 
-                HStack(spacing: 3){
+                HStack(spacing: 4){
             
-                    
-                    Text(submit_letters[0]).frame(width: 30, height: 30)
+                    Text(submit_letters[0]).frame(width: 29, height: 30)
                         .border(.gray)
-                    Text(submit_letters[1]).frame(width: 30, height: 30)
+                    Text(submit_letters[1]).frame(width: 29, height: 30)
                         .border(.gray)
-                    Text(submit_letters[2]).frame(width: 30, height: 30)
+                    Text(submit_letters[2]).frame(width: 29, height: 30)
                         .border(.gray)
-                    Text(submit_letters[3]).frame(width: 30, height: 30)
+                    Text(submit_letters[3]).frame(width: 29, height: 30)
                         .border(.gray)
-                    Text(submit_letters[4]).frame(width: 30, height: 30)
+                    Text(submit_letters[4]).frame(width: 29, height: 30)
                         .border(.gray)
-                    Text(submit_letters[5]).frame(width: 30, height: 30)
+                    Text(submit_letters[5]).frame(width: 29, height: 30)
                         .border(.gray)
-                    Text(submit_letters[6]).frame(width: 30, height: 30)
+                    Text(submit_letters[6]).frame(width: 29, height: 30)
                         .border(.gray)
 
-                    
                     
                     
                     HStack (spacing:3){
@@ -576,7 +578,7 @@ struct ContentView: View {
                             .system(size: 23)
                             .monospaced())
                         .foregroundColor(.white)
-                        .frame(width: 95, height: 30)
+                        .frame(width: 104, height: 30)
                         .border(.gray)
                         .onAppear {
                             startDatabase()
@@ -584,9 +586,9 @@ struct ContentView: View {
                                                 
                         Text(word_number)
                             .font(Font
-                                .system(size: 25)
+                                .system(size: 24)
                                 .monospaced())
-                            .frame(width: 60, height: 30)
+                            .frame(width: 55, height: 30)
                             .border(.gray)
                             .foregroundColor(.yellow)
                     }
@@ -603,11 +605,12 @@ struct ContentView: View {
                            ScrollView {
                                Text(found_words)
                                    .id(1)
+                                   .padding(3)
                                    .foregroundColor(.white)
                                    .frame(maxWidth: .infinity, alignment: .leading)
                                    .textCase(Text.Case.uppercase)
                                    .font(Font
-                                       .system(size: 12)
+                                       .system(size: 14)
                                        .monospaced())
                                    .scrollDisabled(false)
                            }
@@ -633,6 +636,7 @@ struct ContentView: View {
                 
                 Spacer()
             }
+//            .padding(Edge.Set.horizontal, 10)
             .blur(radius: blur_radius)
             
             Color.black
@@ -918,6 +922,7 @@ struct ContentView: View {
                         Spacer()
                     }
                 }
+                .padding(10)
                 .frame(
                       minWidth: 0,
                       maxWidth: .infinity,
@@ -965,7 +970,10 @@ If you like our game you may:
                             .foregroundStyle(.white)
                         Spacer()
                         
-                        Text("Rate")
+                        Button("Rate"){
+                            let url = URL (string: "https://apps.apple.com/app/id6471604639")!
+                                 UIApplication.shared.open (url)
+                        }
                             .font(Font
                                 .system(size: 15)
                                 .monospaced())
@@ -985,16 +993,36 @@ If you like our game you may:
                             .foregroundStyle(.white)
                         Spacer()
                         
-                        Text("Share")
-                            .font(Font
-                                .system(size: 15)
-                                .monospaced())
-                            .foregroundStyle(.blue)
-                            .frame(
-                                  minWidth: 53,
-                                  minHeight: 30
-                                )
-                            .border(.gray)
+                        
+                        ShareLink(
+                            item: URL(string: "https://apps.apple.com/app/id6471604639")!,
+                            message: Text("FindWord")
+                        ) {
+//                            Label("Share", image: "FindWordIcon_IOS.png")
+                            Text("Share")
+                        }
+                        .font(Font
+                            .system(size: 15)
+                            .monospaced())
+                        .foregroundStyle(.blue)
+                        .frame(
+                              minWidth: 53,
+                              minHeight: 30
+                            )
+                        .border(.gray)
+                        
+//                        Button("Share"){
+//                            let url = URL (string: "https://apps.apple.com/app/id6471604639")
+//                        }
+//                            .font(Font
+//                                .system(size: 15)
+//                                .monospaced())
+//                            .foregroundStyle(.blue)
+//                            .frame(
+//                                  minWidth: 53,
+//                                  minHeight: 30
+//                                )
+//                            .border(.gray)
                     }.padding(.horizontal)
                 }
                 .frame(
